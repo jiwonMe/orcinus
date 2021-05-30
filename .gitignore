@@ -1,0 +1,9 @@
+test/
+.vscode/
+record.md
+tmp.html
+playground.py
+.env
+db.*
+__pycache__
+migrations
