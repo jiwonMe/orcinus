@@ -103,6 +103,7 @@ class NiceCheckplus:
     def check_captcha(self, answer):
 
         data = self.data
+        s = self.session
 
         url = "https://nice.checkplus.co.kr/Common/checkplus.cb?m=captcha_proc"
         args = {
@@ -133,6 +134,7 @@ class NiceCheckplus:
 
     # 인증문자 확인
     def check_auth(self, answer):
+        s = self.session
         # 문자 인증번호 입력 및 전송
         url = "https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb"
         args = {
@@ -525,10 +527,10 @@ if __name__ == "__main__":
             ""
         }
 
-        send_letter(s, sailor.data | {
-            "sndbirth": SND_BIRTH,
-            "sndname": SND_NAME,
-            "relation": "친구",
-            "title": "",
-            "content": "",
-        })
+        # send_letter(s, sailor.data | {
+        #     "sndbirth": SND_BIRTH,
+        #     "sndname": SND_NAME,
+        #     "relation": "친구",
+        #     "title": "",
+        #     "content": "",
+        # })
