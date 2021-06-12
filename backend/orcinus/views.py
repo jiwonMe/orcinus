@@ -1,3 +1,4 @@
+import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -32,15 +33,18 @@ class Orcinus(APIView):
 
     data = {}
     nice_checker = None
-    session = None
+    session = requests.Session()
 
     def post(self, request):
 
-        self.data = cache.get_or_set('data', self.data)
-        self.nice_checker = cache.get_or_set('nice_checker', self.nice_checker)
-        self.session = cache.get_or_set('session', self.session)
+        if request.data['method'] != "start":
+            self.data = cache.get('data', self.data)
+            self.nice_checker = cache.get('nice_checker', self.nice_checker)
+            self.session = cache.get('session', self.session)
 
         self.data |= request.data
+
+        print(self.data)
 
         method = self.data['method']
         answer = self.data['answer']
@@ -50,7 +54,8 @@ class Orcinus(APIView):
             return Response({"info": "session created"}, status=status.HTTP_201_CREATED)
         elif method == "get_captcha":
             img = self.get_captcha()
-            return Response({"info": "image"}, status=status.HTTP_200_OK)
+            return Response({"info": "image",
+                             "image": img}, status=status.HTTP_200_OK)
         elif method == "send_verifySMS":
             self.send_verifySMS(answer)
             return Response({"info": "verify SMS sent"}, status=status.HTTP_200_OK)
@@ -63,16 +68,31 @@ class Orcinus(APIView):
 
     def make_session(self):
         data = self.data
-        self.nice_checker = NiceCheckplus(
-            data={
-                "mobileco": data['mobile_co'],
-                "mynum1": data['snd_birth'],
-                "mynum2": data['snd_sex'],
-                "username": data['snd_name'],
-                "mobileno": data['mobile_no']
-            }
-        )
-        self.session = self.nice_checker.get_session()
+        self.session = requests.Session()
+        self.session = NiceCheckplus.make_session(self.session)
+
+        self.nice_checker = NiceCheckplus(self.session,
+                                          {
+                                              "mobileco": data['mobile_co'],
+                                              "mynum1": data['snd_birth'],
+                                              "mynum2": data['snd_sex'],
+                                              "username": data['snd_name'],
+                                              "mobileno": data['mobile_no']
+                                          }
+                                          )
+        # """BEGIN testcode
+        # """
+
+        # img = self.nice_checker.get_captcha()
+        # img.show()
+        # answer = input()
+        # self.nice_checker.check_captcha(answer)
+        # answer = input()
+        # self.nice_checker.check_auth(answer)
+
+        # """END testcode
+        # """
+
         cache.set_many({
             'data': self.data,
             'nice_checker': self.nice_checker,
@@ -81,17 +101,18 @@ class Orcinus(APIView):
 
     def get_captcha(self):
         img = self.nice_checker.get_captcha()
+        print(self.session.headers)
         cache.set_many({
             'data': self.data,
             'nice_checker': self.nice_checker,
             'session': self.session
         })
-        img.show()
+        # img.show()
         return img
 
     def send_verifySMS(self, answer):
-        self.session = self.nice_checker.get_session()
         self.nice_checker.check_captcha(answer)
+        self.session = self.nice_checker.get_session()
         cache.set_many({
             'data': self.data,
             'nice_checker': self.nice_checker,

@@ -483,7 +483,7 @@ def make_session(session):
     }
 
     s.post("https://www.edunavy.mil.kr:10003"+url, data=args, verify=False)
-    return session
+    return s
 
 
 if __name__ == "__main__":
@@ -527,10 +527,10 @@ if __name__ == "__main__":
             ""
         }
 
-        # send_letter(s, sailor.data | {
-        #     "sndbirth": SND_BIRTH,
-        #     "sndname": SND_NAME,
-        #     "relation": "친구",
-        #     "title": "",
-        #     "content": "",
-        # })
+        send_letter(s, sailor.data | {
+            "sndbirth": SND_BIRTH,
+            "sndname": SND_NAME,
+            "relation": "친구",
+            "title": "시험 기간 살려죠...",
+            "content": "분명히 시험은 얼마 안되는데 미뤄둔 과제들이 너무 많아 으허어어엉 ㅠㅠㅠ 아 맞아 편지 잘 받아봤습니다 멋진 그림도 잘 감상함 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
+        })

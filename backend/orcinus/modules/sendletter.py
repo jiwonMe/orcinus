@@ -1,5 +1,6 @@
 import requests
 import os
+import base64
 from bs4 import BeautifulSoup as bs
 from dotenv import load_dotenv
 from io import BytesIO
@@ -13,7 +14,7 @@ class NiceCheckplus:
     """Nice 본인인증모듈
     """
 
-    def __init__(self, session=None,
+    def __init__(self, session,
                  data={
                      "mobileco": str,  # 통신사
                      "mynum1": str,  # 주민등록번호 앞 6자리
@@ -21,10 +22,7 @@ class NiceCheckplus:
                      "username": str,  # 이름
                      "mobileno": str,  # 핸드폰 번호
                  }):
-        if(session is None):
-            self.session = self.make_session()
-        else:
-            self.session = session
+        self.session = session
         self.data = data
 
     # session 만들기
@@ -56,7 +54,7 @@ class NiceCheckplus:
         }
 
         s.post("https://www.edunavy.mil.kr:10003"+url, data=args, verify=False)
-        return session
+        return s
 
     # 캡챠 이미지 받아오기
     def get_captcha(self):
@@ -118,7 +116,7 @@ class NiceCheckplus:
         res = s.get("https://nice.checkplus.co.kr"+self.CAPTCHA_IMAGE)
 
         img = Image.open(BytesIO(res.content))
-        # img.show()
+        img = base64.b64encode(img.read())
         return img
 
     # 캡챠 이미지 맞는지 확인, 맞으면 자동으로 인증 문자 발송
@@ -169,14 +167,14 @@ class NiceCheckplus:
         html = req.text
         soup = bs(html, 'html.parser')
         encode_data = soup.find('input', {'name': 'EncodeData'}).attrs['value']
-
+        print(encode_data)
         url = "https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5_1.jsp?boardID=&category=&returnUrl=https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5.jsp&ipinValue=008003&boardSeqno="
 
         args = {
             "EncodeData": encode_data
         }
 
-        req = s.post(url, data=args)
+        req = s.post(url, data=args, verify=False)  # 해군훈련소 ssl인증서가 만료된거구나..
 
     # 세션 반환
     def get_session(self):
@@ -200,7 +198,7 @@ class Sailor:
             "birth": self.data['birth']
         }
         req = s.post(
-            "https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5.jsp", data=args)
+            "https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5.jsp", data=args, verify=False)
 
         # print(req.text)
         html = req.text
@@ -229,7 +227,7 @@ class PostMan:
         """
         data |= {"method": "insert"}
         session.post(
-            "https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5.jsp", data=data)
+            "https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5.jsp", data=data, verify=False)
 
         return data
 
@@ -490,48 +488,50 @@ if __name__ == "__main__":
     MOBILE_NO = os.getenv("MOBILE_NO")  # 보내는이 전화번호
     MOBILE_CO = os.getenv("MOBILE_CO")  # 보내는이 통신사
 
-    with requests.Session() as s:
+    s = requests.Session()
 
-        nice_checker = NiceCheckplus(s, {
-            "mobileco": MOBILE_CO,
-            "mynum1": SND_BIRTH,
-            "mynum2": SND_SEX,
-            "username": SND_NAME,
-            "mobileno": MOBILE_NO,
-        })
+    s = NiceCheckplus.make_session(s)
 
-        img = nice_checker.get_captcha()
-        img.show()
-        answer = input()
-        nice_checker.check_captcha(answer)
-        answer = input()
-        nice_checker.check_auth(answer)
-        s = nice_checker.get_session()
+    nice_checker = NiceCheckplus(s, {
+        "mobileco": MOBILE_CO,
+        "mynum1": SND_BIRTH,
+        "mynum2": SND_SEX,
+        "username": SND_NAME,
+        "mobileno": MOBILE_NO,
+    })
 
-        sailor = Sailor(s, {
-            "name": SAILOR_NAME,
-            "birth": SAILOR_BIRTH
-        })
+    img = nice_checker.get_captcha()
+    img.show()
+    answer = input()
+    nice_checker.check_captcha(answer)
+    answer = input()
+    nice_checker.check_auth(answer)
+    s = nice_checker.get_session()
 
-        data = sailor.data
+    sailor = Sailor(s, {
+        "name": SAILOR_NAME,
+        "birth": SAILOR_BIRTH
+    })
 
-        print(data)
+    data = sailor.data
 
-        # 재시도
-        arg = {
-            "m": "auth_mobile02",
-        }
+    print(data)
 
-        # 재발송
-        url = "./checkplus.cb?m=auth_mobile_authnum_resend"
-        arg = {
-            ""
-        }
+    # 재시도
+    arg = {
+        "m": "auth_mobile02",
+    }
 
-        PostMan.send_letter(s, sailor.data | {
-            "sndbirth": SND_BIRTH,
-            "sndname": SND_NAME,
-            "relation": "친구",
-            "title": "",
-            "content": "",
-        })
+    # 재발송
+    url = "./checkplus.cb?m=auth_mobile_authnum_resend"
+    arg = {
+        ""
+    }
+
+    # PostMan.send_letter(s, sailor.data | {
+    #     "sndbirth": SND_BIRTH,
+    #     "sndname": SND_NAME,
+    #     "relation": "친구",
+    #     "title": "",
+    #     "content": "",
+    # })
