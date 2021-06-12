@@ -115,7 +115,7 @@ class NiceCheckplus:
 
         res = s.get("https://nice.checkplus.co.kr"+self.CAPTCHA_IMAGE)
 
-        img = Image.open(BytesIO(res.content))
+        img = BytesIO(res.content)
         img = base64.b64encode(img.read())
         return img
 
