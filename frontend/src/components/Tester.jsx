@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import StartPage from './StartPage'
+import CaptchaForm from './CaptchaForm'
 
 const Tester = () => {
     const [form, setForm] = useState({
@@ -37,6 +39,7 @@ const Tester = () => {
 
         const data = await res.json()
         console.log(data)
+        alert(data.info)
 
         if (data.image !== null) {
             setImage(data.image)
@@ -51,16 +54,30 @@ const Tester = () => {
     return (
         <div>
             <h1>Orcinus API Test</h1>
-            <img src={'data:image/png;base64,' + image} />
-            <form>
+            <div>
+                method: <br />
+                <input
+                    name="method"
+                    value={form.method}
+                    onChange={onChange}
+                />
+            </div>
+            <StartPage onChange={onChange} />
+            {
+                form.method === "get_captcha" &&
                 <div>
-                    method: <br />
-                    <input
-                        name="method"
-                        value={form.method}
+                    <CaptchaForm
                         onChange={onChange}
+                        form={form}
                     />
                 </div>
+            }
+
+
+            { image && <img src={'data:image/png;base64,' + image} alt="captcha" />}
+            {
+                (form.method === "send_verifySMS" ||
+                    form.method === "check_verifySMS") &&
                 <div>
                     answer: <br />
                     <input
@@ -69,89 +86,53 @@ const Tester = () => {
                         onChange={onChange}
                     />
                 </div>
+            }
+            {
+                form.method === "send_letter" &&
                 <div>
-                    relation: <br />
-                    <input
-                        name="relation"
-                        value={form.relation}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    snd_name: <br />
-                    <input
-                        name="snd_name"
-                        value={form.snd_name}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    snd_birth: <br />
-                    <input
-                        name="snd_birth"
-                        value={form.snd_birth}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    snd_sex: <br />
-                    <input
-                        name="snd_sex"
-                        value={form.snd_sex}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    mobile_co: <br />
-                    <input
-                        name="mobile_co"
-                        value={form.mobile_co}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    mobile_no: <br />
-                    <input
-                        name="mobile_no"
-                        value={form.mobile_no}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    sailor_name: <br />
-                    <input
-                        name="sailor_name"
-                        value={form.sailor_name}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    sailor_birth: <br />
-                    <input
-                        name="sailor_birth"
-                        value={form.sailor_birth}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    title: <br />
-                    <input
-                        name="title"
-                        value={form.title}
-                        onChange={onChange}
-                    />
-                </div>
-                <div>
-                    content: <br />
-                    <textarea
-                        name="content"
-                        value={form.content}
-                        onChange={onChange}
-                    />
-                </div>
-            </form>
+                    <div>
+                        relation: <br />
+                        <input
+                            name="relation"
+                            value={form.relation}
+                            onChange={onChange}
+                        />
+                    </div>
+                    <div>
+                        sailor_name: <br />
+                        <input
+                            name="sailor_name"
+                            value={form.sailor_name}
+                            onChange={onChange}
+                        />
+                    </div>
+                    <div>
+                        sailor_birth: <br />
+                        <input
+                            name="sailor_birth"
+                            value={form.sailor_birth}
+                            onChange={onChange}
+                        />
+                    </div>
+                    <div>
+                        title: <br />
+                        <input
+                            name="title"
+                            value={form.title}
+                            onChange={onChange}
+                        />
+                    </div>
+                    <div>
+                        content: <br />
+                        <textarea
+                            name="content"
+                            value={form.content}
+                            onChange={onChange}
+                        />
+                    </div>
+                </div>}
             <button onClick={onSubmit}>submit</button>
-        </div>
+        </div >
     )
 }
 
