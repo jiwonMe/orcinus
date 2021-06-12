@@ -7,3 +7,4 @@ playground.py
 db.*
 __pycache__
 migrations
+.firebase
