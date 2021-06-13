@@ -31,7 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '3.37.109.0',  # aws lightsail
-    'orcinus.jiwon.me'
+    'orcinus.jiwon.me',
+    'orcinusapi.web.app'
 ]
 
 
