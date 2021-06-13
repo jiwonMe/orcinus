@@ -71,7 +71,9 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:3000',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://orcinusapi.web.app',
+    'http://orcinusapi.web.app'
 ]
 
 ROOT_URLCONF = 'roknletterserver.urls'
