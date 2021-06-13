@@ -4,7 +4,7 @@ import CaptchaForm from './CaptchaForm'
 
 const Tester = () => {
     const [form, setForm] = useState({
-        method: '',
+        method_: '',
         answer: '',
         snd_name: '',
         snd_birth: '',
@@ -29,7 +29,7 @@ const Tester = () => {
     }
 
     const orcinus = async () => {
-        const res = await fetch('http://orcinus.jiwon.me:8000/api/Orcinus/', {
+        const res = await fetch('https://orcinus.jiwon.me/api/Orcinus/', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -57,14 +57,14 @@ const Tester = () => {
             <div>
                 method: <br />
                 <input
-                    name="method"
-                    value={form.method}
+                    name="method_"
+                    value={form.method_}
                     onChange={onChange}
                 />
             </div>
             <StartPage onChange={onChange} />
             {
-                form.method === "get_captcha" &&
+                form.method_ === "get_captcha" &&
                 <div>
                     <CaptchaForm
                         onChange={onChange}
@@ -76,8 +76,8 @@ const Tester = () => {
 
             { image && <img src={'data:image/png;base64,' + image} alt="captcha" />}
             {
-                (form.method === "send_verifySMS" ||
-                    form.method === "check_verifySMS") &&
+                (form.method_ === "send_verifySMS" ||
+                    form.method_ === "check_verifySMS") &&
                 <div>
                     answer: <br />
                     <input
@@ -88,7 +88,7 @@ const Tester = () => {
                 </div>
             }
             {
-                form.method === "send_letter" &&
+                form.method_ === "send_letter" &&
                 <div>
                     <div>
                         relation: <br />

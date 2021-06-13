@@ -37,7 +37,7 @@ class Orcinus(APIView):
 
     def post(self, request):
 
-        if request.data['method'] != "start":
+        if request.data['method_'] != "start":
             self.data = cache.get('data', self.data)
             self.nice_checker = cache.get('nice_checker', self.nice_checker)
             self.session = cache.get('session', self.session)
@@ -46,24 +46,24 @@ class Orcinus(APIView):
 
         print(self.data)
 
-        method = self.data['method']
+        method_ = self.data['method_']
         answer = self.data['answer']
 
-        if method == "start":
+        if method_ == "start":
             self.make_session()
             return Response({"info": "session created"}, status=status.HTTP_201_CREATED)
-        elif method == "get_captcha":
+        elif method_ == "get_captcha":
             self.make_session()
             img = self.get_captcha()
             return Response({"info": "image",
                              "image": img}, status=status.HTTP_200_OK)
-        elif method == "send_verifySMS":
+        elif method_ == "send_verifySMS":
             self.send_verifySMS(answer)
             return Response({"info": "verify SMS sent"}, status=status.HTTP_200_OK)
-        elif method == "check_verifySMS":
+        elif method_ == "check_verifySMS":
             self.check_verifySMS(answer)
             return Response({"info": "checked!"}, status=status.HTTP_200_OK)
-        elif method == "send_letter":
+        elif method_ == "send_letter":
             self.send_letter()
             return Response({"info": "letter sent"}, status=status.HTTP_200_OK)
 
