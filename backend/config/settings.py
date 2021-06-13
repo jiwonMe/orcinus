@@ -30,8 +30,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = [
-    'https://orcinusapi.web.app',
-    'https://orcinus.jiwon.me',
+    'orcinusapi.web.app',
+    'orcinus.jiwon.me',
     'localhost'
 ]
 
