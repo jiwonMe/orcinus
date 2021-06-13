@@ -29,7 +29,7 @@ const Tester = () => {
     }
 
     const orcinus = async () => {
-        const res = await fetch('http://3.37.109.0:8000/api/Orcinus/', {
+        const res = await fetch('http://orcinus.jiwon.me:8000/api/Orcinus/', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
