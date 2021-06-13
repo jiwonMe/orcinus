@@ -1,6 +1,9 @@
 # ROKN-letter 
 > 해군교육사령부 인터넷 편지 자동화 시스템
 
+[해군교육사령부 > 인터넷편지쓰기](https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5.jsp)
+
+
 ## 기술스택
 - nginx, django, react
 
@@ -16,7 +19,7 @@
 
 ## 서브프로젝트
 
-- NICE 본인인증 스크래핑
+- [NICE 본인인증 스크래핑](https://github.com/jiwonMe/k-on-cert)
 
 ---
 
@@ -34,3 +37,12 @@
 
 - gunicorn 배포
   - [wikidocs: Django 자습 | 03) Nginx, Gunicorn 배포](https://wikidocs.net/6601)
+
+- AWS LightSail
+  - [[AWS 적응기-2] Lightsail instance 설정하기](https://velog.io/@mhc3357/AWS-%EC%A0%81%EC%9D%91%EA%B8%B0-2-Lightsail-instance-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
+
+- django 학습
+  - [점프 투 장고](https://wikidocs.net/77522)
+
+- git 사용법
+  - [git commit/push 취소하기](https://gmlwjd9405.github.io/2018/05/25/git-add-cancle.html)
