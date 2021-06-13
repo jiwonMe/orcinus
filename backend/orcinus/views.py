@@ -42,7 +42,7 @@ class Orcinus(APIView):
             self.nice_checker = cache.get('nice_checker', self.nice_checker)
             self.session = cache.get('session', self.session)
 
-        self.data = dict(list(request.data.items()) + list(self.data.items()))
+        self.data = self.data.update(request.data)
 
         print(self.data)
 
