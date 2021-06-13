@@ -225,7 +225,7 @@ class PostMan:
         Return:
             http code
         """
-        data |= {"method": "insert"}
+        data["method"] = "insert"
         session.post(
             "https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5.jsp", data=data, verify=False)
 
