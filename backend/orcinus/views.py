@@ -37,7 +37,7 @@ class Orcinus(APIView):
 
     def post(self, request):
 
-        if request.data['method_'] != "start":
+        if request.data.get('method_', '') != "start":
             self.data = cache.get('data', self.data)
             self.nice_checker = cache.get('nice_checker', self.nice_checker)
             self.session = cache.get('session', self.session)
