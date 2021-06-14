@@ -9,7 +9,8 @@
 
 ## 배포
 - backend
-  - AWS LightSail
+  - ~~AWS LightSail~~(GCP로 이전)
+  - Google Cloud Platform
   - [orcinus API](https://orcinus.jiwon.me/api/Orcinus)
 - frontend
   - firebase
@@ -38,8 +39,14 @@
 - gunicorn 배포
   - [wikidocs: Django 자습 | 03) Nginx, Gunicorn 배포](https://wikidocs.net/6601)
 
+- static 파일
+  - [[Deploy] Django 프로젝트 배포하기 - 4. Static 파일](https://nachwon.github.io/django-deploy-4-static/)
+
 - AWS LightSail
   - [[AWS 적응기-2] Lightsail instance 설정하기](https://velog.io/@mhc3357/AWS-%EC%A0%81%EC%9D%91%EA%B8%B0-2-Lightsail-instance-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
+
+- GCP
+  - [GCP 배포](https://velog.io/@codren/GCP-%EB%B0%B0%ED%8F%AC)
 
 - django 학습
   - [점프 투 장고](https://wikidocs.net/77522)
