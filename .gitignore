@@ -8,3 +8,4 @@ db.*
 __pycache__
 migrations
 .firebase
+.static_root
