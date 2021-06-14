@@ -1,5 +1,5 @@
-# ROKN-letter 
-> 해군교육사령부 인터넷 편지 자동화 시스템
+# ORCINUS
+> 해군교육사령부 인터넷 편지 시스템
 
 [해군교육사령부 > 인터넷편지쓰기](https://www.edunavy.mil.kr:10003/themes/basic/sub2/4_5.jsp)
 
