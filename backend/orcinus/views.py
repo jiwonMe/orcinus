@@ -50,7 +50,9 @@ class Orcinus(APIView):
         answer = self.data['answer']
 
         if method_ == "start":
+            print("method: start")
             self.make_session()
+            print("session created")
             return Response({"info": "session created"}, status=status.HTTP_201_CREATED)
         elif method_ == "get_captcha":
             self.make_session()
