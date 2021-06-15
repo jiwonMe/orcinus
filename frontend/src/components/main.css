@@ -1,0 +1,90 @@
+html,
+body {
+    width: 100%;
+}
+
+.textinput {
+    border: none;
+    padding-bottom: 1em;
+}
+
+.textinput input {
+    /* width: 20em; */
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
+    border-bottom: solid 2px #888;
+    border-radius: 0;
+    padding: 0.5em;
+    padding-top: 0.7em;
+    font-size: 1em;
+}
+
+.textinput input:focus-within {
+    outline: none;
+    border-color: #000000;
+    background-color: #eeeeee;
+}
+
+.description {
+    font-size: 1em;
+    margin-bottom: 0.2em;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    /* border: solid; */
+    width: width;
+    height: 100%;
+}
+
+.bottom {
+    box-sizing: border-box;
+    position: fixed;
+    align-items: center;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 3;
+}
+
+.bottom button {
+    margin: auto;
+    font-weight: bold;
+    width: 100%;
+    padding: 1em;
+    color: #FFF;
+    background-color: #333;
+    border: none;
+    border-radius: 0.5em;
+    box-shadow: 0px 5px 5px #00000033;
+}
+
+.bottom button:hover {
+    outline: none;
+    color: #FFF;
+    background-color: #666;
+}
+
+#captcha_image {
+    margin-bottom: 1em;
+}
+
+textarea {
+    font: 1em normal;
+    box-sizing: border-box;
+    width: 100%;
+    height: 10em;
+    border: solid 2px #888;
+    border-radius: 0;
+    resize: none;
+    padding: 0.5em;
+}
+
+textarea:focus-within {
+    font-size: 1em;
+    border-color: #000;
+    outline: none;
+}
