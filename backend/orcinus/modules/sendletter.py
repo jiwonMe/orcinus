@@ -501,7 +501,7 @@ if __name__ == "__main__":
     })
 
     img = nice_checker.get_captcha()
-    img.show()
+    print(img)
     answer = input()
     nice_checker.check_captcha(answer)
     answer = input()
