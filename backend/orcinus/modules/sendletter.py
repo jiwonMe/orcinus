@@ -129,7 +129,7 @@ class NiceCheckplus:
         args = {
             "m": "auth_mobile01_proc",
             "mobileco": data['mobileco'],
-            "mynum": data['mynum'],
+            "mynum": data['mynum1'] + data['mynum2'],
             "username": data['username'],
             "mynum1": data['mynum1'],
             "mynum2": data['mynum2'],
