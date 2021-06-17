@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TextArea from './TextArea'
 import TextInput from './TextInput'
 
-const LetterForm = () => {
+const LetterForm = ({ onChange, data }) => {
+
+    useEffect(
+        () => onChange({ target: { id: "method_", value: "send_letter" } }), [data.method_,]
+    )
+
     return (
         <div className="container">
-            <TextInput title="받는사람" name="sailor" description="이름(실명)" />
-            <TextInput title="생년월일(받는사람)" name="sailor_birth" description="YYMMDD" />
-            <TextInput title="제목" name="title" description="100자 이내" />
-            <TextArea title="내용" name="content" description="내용을 입력해주세요 (1000자 이내)" />
+            <TextInput id="sailor_name" title="받는사람" name="receiver" description="이름(실명)" onChange={onChange} />
+            <TextInput id="sailor_birth" title="생년월일(받는사람)" name="receiver_birth" description="YYMMDD" onChange={onChange} />
+            <TextInput id="title" title="제목" name="title" description="100자 이내" onChange={onChange} />
+            <TextArea id="content" title="내용" name="content" description="내용을 입력해주세요 (1000자 이내)" onChange={onChange} />
         </div>
     )
 }

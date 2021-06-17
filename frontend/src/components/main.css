@@ -51,6 +51,7 @@ body {
 }
 
 .bottom button {
+    font: 1em Arial;
     margin: auto;
     font-weight: bold;
     width: 100%;
@@ -73,7 +74,7 @@ body {
 }
 
 textarea {
-    font: 1em normal;
+    font: 1em Arial;
     box-sizing: border-box;
     width: 100%;
     height: 10em;

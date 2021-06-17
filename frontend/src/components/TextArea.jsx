@@ -1,10 +1,10 @@
 import React from 'react'
 
-const TextArea = ({ title, name, description }) => {
+const TextArea = ({ id, title, name, description, onChange }) => {
     return (
         <div>
             <div className="description">{title}</div>
-            <textarea name={name} placeholder={description} />
+            <textarea id={id} name={name} placeholder={description} onChange={onChange} />
         </div>
     )
 }

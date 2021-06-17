@@ -1,10 +1,10 @@
 import React from 'react'
 
-const TextInput = ({ name, title, description }) => {
+const TextInput = ({ id, name, value, title, description, onChange }) => {
     return (
         <div className="textinput">
             <div className="description">{title}</div>
-            <input name={name} placeholder={description || "None"} />
+            <input id={id} name={name} placeholder={description || "None"} onChange={onChange} value={value} />
         </div>
     )
 }
